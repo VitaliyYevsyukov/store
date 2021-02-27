@@ -1,7 +1,7 @@
 INSERT INTO stores(id, name, phone, type, cashbox_count, delivery)
 VALUES (DEFAULT, 'ATB', '+380577365112', 'grocery', 10, true)
-
-    INSERT INTO stores(id, name, phone, type, cashbox_count, delivery)
+    INSERT
+INTO stores(id, name, phone, type, cashbox_count, delivery)
 VALUES (DEFAULT, 'Silpo', '+380574351134', 'grocery', 6, false)
 
 INSERT INTO stores(id, name, phone, type, cashbox_count, delivery)
@@ -12,7 +12,6 @@ VALUES (DEFAULT, 'Epicentr', '+380954563287', 'building', 22, true)
 
 INSERT INTO stores(id, name, phone, type, cashbox_count, delivery)
 VALUES (DEFAULT, 'Zloy', '+380503264315', 'everyday', 2, false)
-
 
 
 INSERT INTO goods (id, name, cost, manufacturer, date, store_id)
@@ -85,9 +84,14 @@ INSERT INTO goods (id, name, cost, manufacturer, date, store_id)
 VALUES (DEFAULT, 'milk', 35.1, 'Prostokvasheno', '2021-02-16 22:13:08.000000', 5)
 
 
-update stores set name = 'New name' where id = 5;
+update stores
+set name = 'New name'
+where id = 5;
 
-delete from goods where id = 2;
+delete
+from goods
+where id = 2;
 
-select name, phone from stores
+select name, phone
+from stores
 where delivery = true;

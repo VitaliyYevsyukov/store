@@ -1,20 +1,21 @@
-create database stores;
+create
+database stores;
 
 create table stores
 (
-    id bigserial
+    id            bigserial
         constraint stores_pk
             primary key,
-    name varchar,
-    phone varchar,
-    type varchar,
+    name          varchar,
+    phone         varchar,
+    type          varchar,
     cashbox_count smallint,
-    delivery boolean
+    delivery      boolean
 );
 
 create table goods
 (
-    id bigserial not null
+    id           bigserial not null
         constraint goods_pk
             primary key,
     name         varchar,

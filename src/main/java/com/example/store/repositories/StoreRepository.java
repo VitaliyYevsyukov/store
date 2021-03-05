@@ -8,8 +8,8 @@ public interface StoreRepository {
 
     Store getById(Long id);
     List<Store> getAll();
-    Store addStore(Store store);
+    void saveStore(Store store);
     void delete(Long id);
-    Store update(Store store);
+    void update(Store store);
 
 }

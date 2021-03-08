@@ -18,7 +18,6 @@ public class StoreRepositoryImpl implements StoreRepository {
 
     private final JdbcTemplate jdbcTemplate;
 
-    @Autowired
     public StoreRepositoryImpl(JdbcTemplate jdbcTemplate, RowMapper<Store> storeRowMapper) {
         this.jdbcTemplate = jdbcTemplate;
         this.storeRowMapper = storeRowMapper;
@@ -37,10 +36,11 @@ public class StoreRepositoryImpl implements StoreRepository {
     }
 
     @Override
-    public void saveStore(Store store){
+    public Store saveStore(Store store){
         jdbcTemplate.update("insert into stores(name, phone, type, cashbox_count, delivery)" +
                         " values(?,?,?,?,?)", store.getName(), store.getPhone(), store.getType(),
                         store.getCashboxCount(), store.isDelivery());
+        return store;
     }
 
     @Override
@@ -49,8 +49,9 @@ public class StoreRepositoryImpl implements StoreRepository {
     }
 
     @Override
-    public void update(Store store) {
+    public Store update(Store store) {
         jdbcTemplate.update("update stores set cashbox_count = ? where id = ?",
                 store.getCashboxCount(), store.getId());
+        return store;
     }
 }

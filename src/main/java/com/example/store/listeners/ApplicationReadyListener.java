@@ -29,8 +29,8 @@ public class ApplicationReadyListener {
     public void applicationReadyHandler(){
         Store store = storeRepository.getById(17L);
         //storeRepository.saveStore(new Store("Posad", "+380984567534", "grocery", 5, false));  // uncomment
-        //storeRepository.delete(16L);      // uncomment
-        store.setCashboxCount(12);
+        storeRepository.delete(18L);      // uncomment
+        store.setCashboxCount(7);
         storeRepository.update(store);
         List<Store> storeList = storeRepository.getAll();
         LOGGER.info("Store = {}", store);

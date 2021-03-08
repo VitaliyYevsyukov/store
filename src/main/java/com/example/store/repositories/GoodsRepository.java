@@ -8,8 +8,8 @@ public interface GoodsRepository {
 
     Goods getById(Long id);
     List<Goods> getAll();
-    void saveGoods(Goods goods);
+    Goods saveGoods(Goods goods);
     void delete(Long id);
-    void update(Goods goods);
+    Goods update(Goods goods);
 
 }

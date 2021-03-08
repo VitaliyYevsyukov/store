@@ -17,7 +17,6 @@ public class GoodsRepositoryImpl implements GoodsRepository {
 
     private final JdbcTemplate jdbcTemplate;
 
-    @Autowired
     public GoodsRepositoryImpl(JdbcTemplate jdbcTemplate, RowMapper<Goods> goodsRowMapper){
         this.jdbcTemplate = jdbcTemplate;
         this.goodsRowMapper = goodsRowMapper;
@@ -37,11 +36,12 @@ public class GoodsRepositoryImpl implements GoodsRepository {
     }
 
     @Override
-    public void saveGoods(Goods goods) {
+    public Goods saveGoods(Goods goods) {
         jdbcTemplate.update("insert into goods(name, cost, manufacturer, date_of_manufacture, store_id)" +
                         " values(?,?,?,?,(select id from stores where name = 'Epicentr'))",
                         goods.getName(), goods.getCost(), goods.getManufacturer(),
                         goods.getDateOfManufacture());
+        return goods;
     }
 
     @Override
@@ -50,8 +50,9 @@ public class GoodsRepositoryImpl implements GoodsRepository {
     }
 
     @Override
-    public void update(Goods goods) {
+    public Goods update(Goods goods) {
         jdbcTemplate.update("update goods set cost = ? where id = ?",
                 goods.getCost(), goods.getId());
+        return goods;
     }
 }

@@ -10,8 +10,8 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
-import java.time.Instant;
 import java.util.List;
+import java.util.Set;
 
 @Component
 public class ApplicationReadyListener {
@@ -27,23 +27,27 @@ public class ApplicationReadyListener {
 
     @EventListener(ApplicationReadyEvent.class)
     public void applicationReadyHandler(){
-        Store store = storeRepository.getById(17L);
-        //storeRepository.saveStore(new Store("Posad", "+380984567534", "grocery", 5, false));  // uncomment
-        storeRepository.delete(18L);      // uncomment
+        Store store = storeRepository.getById(17L).get();
+        //storeRepository.createStore(new Store("Posad", "+380984567534", "grocery", 5, false));  // uncomment
+        storeRepository.delete(19L);      // uncomment
         store.setCashboxCount(7);
         storeRepository.update(store);
         List<Store> storeList = storeRepository.getAll();
+        Set<String> storeSet = storeRepository.getNames();
         LOGGER.info("Store = {}", store);
         LOGGER.info("All stores {}", storeList);
+        LOGGER.info("All stores names {}", storeSet);
 
-        Goods goods = goodsRepository.getById(3L);
-        //goodsRepository.saveGoods(new Goods("jalousie", 450.3, "Bella Vita", null));
+        Goods goods = goodsRepository.getById(3L).get();
+        //goodsRepository.createGoods(new Goods("jalousie", 450.3, "Bella Vita", null));
         //goodsRepository.delete(24L);
         goods.setCost(32.75);
         goodsRepository.update(goods);
         List<Goods> goodsList = goodsRepository.getAll();
+        Set<String> goodsSet = goodsRepository.getNames();
         LOGGER.info("Goods = {}", goods);
         LOGGER.info("All goods {}", goodsList);
+        LOGGER.info("All goods names {}", goodsSet);
     }
 
 }

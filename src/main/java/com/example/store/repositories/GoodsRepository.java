@@ -8,7 +8,7 @@ public interface GoodsRepository {
 
     Goods getById(Long id);
     List<Goods> getAll();
-    Goods addGoods(Goods goods);
+    Goods saveGoods(Goods goods);
     void delete(Long id);
     Goods update(Goods goods);
 

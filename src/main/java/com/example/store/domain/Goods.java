@@ -23,6 +23,13 @@ public class Goods {
         this.dateOfManufacture = dateOfManufacture;
     }
 
+    public Goods(String name, Double cost, String manufacturer, Instant dateOfManufacture) {
+        this.name = name;
+        this.cost = cost;
+        Manufacturer = manufacturer;
+        this.dateOfManufacture = dateOfManufacture;
+    }
+
     public Long getId() {
         return id;
     }
@@ -74,5 +81,16 @@ public class Goods {
     @Override
     public int hashCode() {
         return Objects.hash(id, name, cost, Manufacturer, dateOfManufacture);
+    }
+
+    @Override
+    public String toString() {
+        return "Goods{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", cost=" + cost +
+                ", Manufacturer='" + Manufacturer + '\'' +
+                ", dateOfManufacture=" + dateOfManufacture +
+                '}';
     }
 }

@@ -8,19 +8,27 @@ public class Store {
     private String name;
     private String phone;
     private String type;
-    private Integer numberOfCashBox;
+    private Integer cashboxCount;
     private boolean isDelivery;
 
     Store(){
 
     }
 
-    public Store(Long id, String name, String phone, String type, Integer numberOfCashBox, boolean isDelivery) {
+    public Store(String name, String phone, String type, Integer cashboxCount, boolean isDelivery) {
+        this.name = name;
+        this.phone = phone;
+        this.type = type;
+        this.cashboxCount = cashboxCount;
+        this.isDelivery = isDelivery;
+    }
+
+    public Store(Long id, String name, String phone, String type, Integer cashboxCount, boolean isDelivery) {
         this.id = id;
         this.name = name;
         this.phone = phone;
         this.type = type;
-        this.numberOfCashBox = numberOfCashBox;
+        this.cashboxCount = cashboxCount;
         this.isDelivery = isDelivery;
     }
 
@@ -56,12 +64,12 @@ public class Store {
         this.type = type;
     }
 
-    public Integer getNumberOfCashBox() {
-        return numberOfCashBox;
+    public Integer getCashboxCount() {
+        return cashboxCount;
     }
 
-    public void setNumberOfCashBox(Integer numberOfCashBox) {
-        this.numberOfCashBox = numberOfCashBox;
+    public void setCashboxCount(Integer cashboxCount) {
+        this.cashboxCount = cashboxCount;
     }
 
     public boolean isDelivery() {
@@ -77,11 +85,23 @@ public class Store {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Store store = (Store) o;
-        return isDelivery == store.isDelivery && Objects.equals(id, store.id) && Objects.equals(name, store.name) && Objects.equals(phone, store.phone) && Objects.equals(type, store.type) && Objects.equals(numberOfCashBox, store.numberOfCashBox);
+        return isDelivery == store.isDelivery && Objects.equals(id, store.id) && Objects.equals(name, store.name) && Objects.equals(phone, store.phone) && Objects.equals(type, store.type) && Objects.equals(cashboxCount, store.cashboxCount);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, phone, type, numberOfCashBox, isDelivery);
+        return Objects.hash(id, name, phone, type, cashboxCount, isDelivery);
+    }
+
+    @Override
+    public String toString() {
+        return "Store{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", phone='" + phone + '\'' +
+                ", type='" + type + '\'' +
+                ", cashboxCount=" + cashboxCount +
+                ", isDelivery=" + isDelivery +
+                '}';
     }
 }

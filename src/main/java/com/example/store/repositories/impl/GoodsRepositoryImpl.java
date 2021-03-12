@@ -36,17 +36,22 @@ public class GoodsRepositoryImpl implements GoodsRepository {
     }
 
     @Override
-    public Optional<Goods> createGoods(Goods goods) {
+    public Optional<Goods> create(Goods goods, Long id) {
         try{
             jdbcTemplate.update("insert into goods(name, cost, manufacturer, date_of_manufacture, store_id)" +
-                            " values(?,?,?,?,(select id from stores where name = 'Epicentr'))",
+                            " values(?,?,?,?,?)",
                     goods.getName(), goods.getCost(), goods.getManufacturer(),
-                    goods.getDateOfManufacture());
+                    goods.getDateOfManufacture(), id);
             return Optional.ofNullable(goods);
         }catch (DataAccessException e){
             e.printStackTrace();
             return Optional.empty();
         }
+    }
+
+    @Override
+    public List<Goods> create(List<Goods> goods, Long id) {
+        return null;
     }
 
     @Override
@@ -78,6 +83,16 @@ public class GoodsRepositoryImpl implements GoodsRepository {
         Set<String> result = goodsList.stream()
                 .map(goods -> goods.getName()).collect(Collectors.toSet());
         return result;
+    }
+
+    @Override
+    public List<Goods> getAllByStoreId(Long id) {
+        return jdbcTemplate.query("select * from goods where store_id = ?", goodsRowMapper, id);
+    }
+
+    @Override
+    public void deleteAllByStoreId(Long id) {
+        jdbcTemplate.update("delete from goods where store_id = ?", id);
     }
 
 

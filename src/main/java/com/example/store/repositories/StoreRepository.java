@@ -10,7 +10,7 @@ public interface StoreRepository {
 
     Optional<Store> getById(Long id);
     List<Store> getAll();
-    Optional<Store> createStore(Store store);
+    Optional<Store> create(Store store);
     void delete(Long id);
     Optional<Store> update(Store store);
     Set<String> getNames();

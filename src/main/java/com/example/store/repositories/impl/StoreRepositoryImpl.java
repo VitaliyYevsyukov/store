@@ -36,7 +36,7 @@ public class StoreRepositoryImpl implements StoreRepository {
     }
 
     @Override
-    public Optional<Store> createStore(Store store){
+    public Optional<Store> create(Store store){
 
         try{
             jdbcTemplate.update("insert into stores(name, phone, type, cashbox_count, delivery)" +
@@ -79,6 +79,5 @@ public class StoreRepositoryImpl implements StoreRepository {
                 .stream().map(store -> store.getName()).collect(Collectors.toSet());
         return result;
     }
-
 
 }

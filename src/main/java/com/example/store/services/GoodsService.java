@@ -1,15 +1,16 @@
 package com.example.store.services;
 
 import com.example.store.domain.Goods;
+import com.example.store.dtos.GoodsDto;
 
 import java.util.List;
 
 public interface GoodsService {
 
-    Goods getById(Long id);
-    List<Goods> getAll();
-    Goods addGoods(Goods goods);
+    GoodsDto getById(Long id);
+    List<GoodsDto> getAll();
+    GoodsDto addGoods(GoodsDto goodsDto, Long id);
     void delete(Long id);
-    Goods update(Goods goods);
+    GoodsDto update(GoodsDto goodsDto);
 
 }

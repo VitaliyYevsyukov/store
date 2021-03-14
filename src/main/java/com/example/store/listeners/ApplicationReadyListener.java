@@ -12,6 +12,7 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -34,12 +35,12 @@ public class ApplicationReadyListener {
     @EventListener(ApplicationReadyEvent.class)
     public void applicationReadyHandler(){
 
+        // SERVICE
         //storeService.create(new StoreDto(new Store("Posad", "+380984567534", "grocery", 34, false)));
-
         StoreDto storeDto = storeService.getById(21L);
-
         storeService.delete(17l);
 
+        // REPOSITORIES
         /*Store store = storeRepository.getById(17L).get();
         //storeRepository.create(new Store("Posad", "+380984567534", "grocery", 5, false));  // uncomment
         //storeRepository.delete(19L);      // uncomment
@@ -61,6 +62,22 @@ public class ApplicationReadyListener {
         LOGGER.info("Goods = {}", goods);
         LOGGER.info("All goods {}", goodsList);
         LOGGER.info("All goods names {}", goodsSet);*/
+
+        /*Goods goods1 = new Goods(null,"jalousie", 501.3, "Bella Vita", null);
+        Goods goods2 = new Goods(null,"jalousie", 502.3, "Bella Vita", null);
+        Goods goods3 = new Goods(null,"jalousie", 503.3, "Bella Vita", null);
+        Goods goods4 = new Goods(null,"jalousie", 504.3, "Bella Vita", null);
+        Goods goods5 = new Goods(null,"jalousie", 505.3, "Bella Vita", null);
+
+        List<Goods> goodsList = new ArrayList<Goods>();
+        goodsList.add(goods1);
+        goodsList.add(goods2);
+        goodsList.add(goods3);
+        goodsList.add(goods4);
+        goodsList.add(goods5);
+
+        goodsRepository.create(goodsList, 4L);*/
+
     }
 
 }

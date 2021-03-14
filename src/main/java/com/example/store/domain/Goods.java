@@ -3,7 +3,6 @@ package com.example.store.domain;
 import lombok.*;
 
 import java.time.Instant;
-import java.util.Objects;
 
 @ToString
 @Getter

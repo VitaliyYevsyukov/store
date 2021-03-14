@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -18,18 +19,18 @@ public class GoodsRepositoryImpl implements GoodsRepository {
     private final RowMapper<Goods> goodsRowMapper;
     private final JdbcTemplate jdbcTemplate;
 
-    public GoodsRepositoryImpl(JdbcTemplate jdbcTemplate, RowMapper<Goods> goodsRowMapper){
+    public GoodsRepositoryImpl(JdbcTemplate jdbcTemplate, RowMapper<Goods> goodsRowMapper) {
         this.jdbcTemplate = jdbcTemplate;
         this.goodsRowMapper = goodsRowMapper;
     }
 
     @Override
     public Optional<Goods> getById(Long id) {
-        try{
+        try {
             Goods goods = jdbcTemplate.queryForObject("select * from goods where id = ?",
                     goodsRowMapper, id);
             return Optional.ofNullable(goods);
-        }catch (DataAccessException e){
+        } catch (DataAccessException e) {
             e.printStackTrace();
             return Optional.empty();
         }
@@ -37,13 +38,13 @@ public class GoodsRepositoryImpl implements GoodsRepository {
 
     @Override
     public Optional<Goods> create(Goods goods, Long id) {
-        try{
+        try {
             jdbcTemplate.update("insert into goods(name, cost, manufacturer, date_of_manufacture, store_id)" +
                             " values(?,?,?,?,?)",
                     goods.getName(), goods.getCost(), goods.getManufacturer(),
                     goods.getDateOfManufacture(), id);
             return Optional.ofNullable(goods);
-        }catch (DataAccessException e){
+        } catch (DataAccessException e) {
             e.printStackTrace();
             return Optional.empty();
         }
@@ -51,7 +52,12 @@ public class GoodsRepositoryImpl implements GoodsRepository {
 
     @Override
     public List<Goods> create(List<Goods> goods, Long id) {
-        return null;
+        List<Goods> goodsList = new ArrayList<>();
+        goods.forEach(existedGoods -> {
+            create(existedGoods, id);
+            goodsList.add(existedGoods);
+        });
+        return goodsList;
     }
 
     @Override
@@ -61,11 +67,11 @@ public class GoodsRepositoryImpl implements GoodsRepository {
 
     @Override
     public Optional<Goods> update(Goods goods) {
-        try{
+        try {
             jdbcTemplate.update("update goods set cost = ? where id = ?",
                     goods.getCost(), goods.getId());
             return Optional.ofNullable(goods);
-        }catch (DataAccessException e){
+        } catch (DataAccessException e) {
             e.printStackTrace();
             return Optional.empty();
         }

@@ -69,9 +69,9 @@ public class GoodsRepositoryImpl implements GoodsRepository {
     public Optional<Goods> update(Goods goods, Long id) {
         try {
             jdbcTemplate.update("update goods set " +
-                            "name = ? " +
-                            "cost = ? " +
-                            "manufacturer = ? " +
+                            "name = ?, " +
+                            "cost = ?, " +
+                            "manufacturer = ?, " +
                             "date_of_manufacture = ? " +
                             "where id = ?",
                     goods.getName(), goods.getCost(),

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/v1/goods")
+@RequestMapping(value = "/v1/stores/{id}/goods")
 @AllArgsConstructor
 public class GoodsController {
 
@@ -26,7 +26,7 @@ public class GoodsController {
         return goodsService.getAll();
     }
 
-    @PostMapping(value = "/{id}/goods")
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public GoodsDto post(@RequestBody GoodsDto goodsDto, @PathVariable Long id){
         return goodsService.create(goodsDto, id);

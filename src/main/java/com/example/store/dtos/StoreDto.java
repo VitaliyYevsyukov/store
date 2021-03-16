@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor(access = AccessLevel.PACKAGE)
 @AllArgsConstructor
 public class StoreDto {
@@ -32,7 +33,7 @@ public class StoreDto {
         this.isDelivery = store.isDelivery();
         this.goodsDtoList = !CollectionUtils.isEmpty(goods) ?
                 goods.stream().map(GoodsDto::new)
-                .collect(Collectors.toList()) : Collections.emptyList();
+                        .collect(Collectors.toList()) : Collections.emptyList();
     }
 
     public StoreDto(Store store) {
@@ -42,8 +43,9 @@ public class StoreDto {
     public static Store convertToDomain(StoreDto storeDto) {
         return new Store(storeDto.getId(), storeDto.getName(),
                 storeDto.getPhone(), storeDto.getType(), storeDto.getCashboxCount(), storeDto.isDelivery,
-                storeDto.getGoodsDtoList().stream()
-                        .map(goods -> GoodsDto.convertToDomain(goods)).collect(Collectors.toList()));
+                !CollectionUtils.isEmpty(storeDto.getGoodsDtoList()) ? storeDto.getGoodsDtoList()
+                .stream()
+                .map(GoodsDto::convertToDomain).collect(Collectors.toList()) : Collections.emptyList());
     }
 
     public static StoreDto convertToDto(Store store){

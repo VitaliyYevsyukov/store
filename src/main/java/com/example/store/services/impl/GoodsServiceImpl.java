@@ -42,12 +42,11 @@ public class GoodsServiceImpl implements GoodsService {
         }
         return goodsList.stream().map(goods -> GoodsDto.convertToDto(goods))
                 .collect(Collectors.toList());
-
     }
 
     @Override
-    public GoodsDto addGoods(GoodsDto goodsDto, Long id) {
-        return goodsRepository.create(GoodsDto.convertToDomain(goodsDto), id)
+    public GoodsDto create(GoodsDto goodsDto, Long storeId) {
+        return goodsRepository.create(GoodsDto.convertToDomain(goodsDto), storeId)
                 .map(goods -> new GoodsDto(goods))
                 .orElseThrow(() -> new ApplicationException("Failed to add goods + " + goodsDto));
     }
@@ -58,8 +57,8 @@ public class GoodsServiceImpl implements GoodsService {
     }
 
     @Override
-    public GoodsDto update(GoodsDto goodsDto) {
-        Goods goods = goodsRepository.update(GoodsDto.convertToDomain(goodsDto))
+    public GoodsDto update(GoodsDto goodsDto, Long id) {
+        Goods goods = goodsRepository.update(GoodsDto.convertToDomain(goodsDto), id)
                 .orElseThrow(() -> new ApplicationException("Failed to update goods: " + goodsDto));
         return GoodsDto.convertToDto(goods);
     }

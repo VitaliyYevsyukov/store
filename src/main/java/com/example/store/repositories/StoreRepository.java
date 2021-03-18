@@ -12,6 +12,6 @@ public interface StoreRepository {
     List<Store> getAll();
     Optional<Store> create(Store store);
     void delete(Long id);
-    Optional<Store> update(Store store);
+    Optional<Store> update(Store store, Long id);
     Set<String> getNames();
 }

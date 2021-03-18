@@ -10,10 +10,10 @@ public interface GoodsRepository {
 
     Optional<Goods> getById(Long id);
     List<Goods> getAll();
-    Optional<Goods> create(Goods goods, Long id);
+    Optional<Goods> create(Goods goods, Long storeId);
     List<Goods> create(List<Goods> goods, Long id);
     void delete(Long id);
-    Optional<Goods> update(Goods goods);
+    Optional<Goods> update(Goods goods, Long id);
     Set<String> getNames();
     List<Goods> getAllByStoreId(Long id);
     void deleteAllByStoreId(Long id);

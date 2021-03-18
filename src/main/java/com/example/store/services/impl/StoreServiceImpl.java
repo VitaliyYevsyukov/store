@@ -33,7 +33,8 @@ public class StoreServiceImpl implements StoreService {
 
     @Override
     public StoreDto create(StoreDto storeDto) {
-        Store store = StoreDto.convertToDomain(storeDto);
+        Store store = storeRepository.create(StoreDto.convertToDomain(storeDto))
+                .orElseThrow(() -> new ResourceNotFoundException("Failed to create store " + storeDto));
         List<Goods> goodsList = storeDto.getGoodsDtoList()
                 .stream()
                 .map(goodsDto -> {
@@ -51,7 +52,6 @@ public class StoreServiceImpl implements StoreService {
                 .collect(Collectors.toList()));
 
         return convertStoreDto;
-
     }
 
     @Override
@@ -70,7 +70,6 @@ public class StoreServiceImpl implements StoreService {
         return storeList.stream()
                 .map(store -> StoreDto.convertToDto(store))
                 .collect(Collectors.toList());
-
     }
 
     @Override
@@ -80,9 +79,9 @@ public class StoreServiceImpl implements StoreService {
     }
 
     @Override
-    public StoreDto update(StoreDto storeDto) {
-        Store store = storeRepository.update(StoreDto.convertToDomain(storeDto))
-                .orElseThrow(() -> new ApplicationException("Failed to update store store " + storeDto));
+    public StoreDto update(StoreDto storeDto, Long id) {
+        Store store = storeRepository.update(StoreDto.convertToDomain(storeDto), id)
+                .orElseThrow(() -> new ApplicationException("Failed to update store " + storeDto));
         return StoreDto.convertToDto(store);
     }
 }

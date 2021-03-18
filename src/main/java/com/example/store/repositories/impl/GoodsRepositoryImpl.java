@@ -37,12 +37,12 @@ public class GoodsRepositoryImpl implements GoodsRepository {
     }
 
     @Override
-    public Optional<Goods> create(Goods goods, Long id) {
+    public Optional<Goods> create(Goods goods, Long storeId) {
         try {
             jdbcTemplate.update("insert into goods(name, cost, manufacturer, date_of_manufacture, store_id)" +
                             " values(?,?,?,?,?)",
                     goods.getName(), goods.getCost(), goods.getManufacturer(),
-                    goods.getDateOfManufacture(), id);
+                    goods.getDateOfManufacture(), storeId);
             return Optional.ofNullable(goods);
         } catch (DataAccessException e) {
             e.printStackTrace();
@@ -66,10 +66,16 @@ public class GoodsRepositoryImpl implements GoodsRepository {
     }
 
     @Override
-    public Optional<Goods> update(Goods goods) {
+    public Optional<Goods> update(Goods goods, Long id) {
         try {
-            jdbcTemplate.update("update goods set cost = ? where id = ?",
-                    goods.getCost(), goods.getId());
+            jdbcTemplate.update("update goods set " +
+                            "name = ?, " +
+                            "cost = ?, " +
+                            "manufacturer = ?, " +
+                            "date_of_manufacture = ? " +
+                            "where id = ?",
+                    goods.getName(), goods.getCost(),
+                    goods.getManufacturer(), goods.getDateOfManufacture(), id);
             return Optional.ofNullable(goods);
         } catch (DataAccessException e) {
             e.printStackTrace();
@@ -100,6 +106,5 @@ public class GoodsRepositoryImpl implements GoodsRepository {
     public void deleteAllByStoreId(Long id) {
         jdbcTemplate.update("delete from goods where store_id = ?", id);
     }
-
 
 }

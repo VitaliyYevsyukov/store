@@ -10,6 +10,6 @@ public interface StoreService {
     List<StoreDto> getAll();
     StoreDto create(StoreDto storeDto);
     void delete(Long id);
-    StoreDto update(StoreDto storeDto);
+    StoreDto update(StoreDto storeDto, Long id);
 
 }

@@ -18,4 +18,10 @@ public class Goods {
     private String Manufacturer;
     private Instant dateOfManufacture;
 
+    public Goods(String name, Double cost, String manufacturer, Instant dateOfManufacture) {
+        this.name = name;
+        this.cost = cost;
+        Manufacturer = manufacturer;
+        this.dateOfManufacture = dateOfManufacture;
+    }
 }

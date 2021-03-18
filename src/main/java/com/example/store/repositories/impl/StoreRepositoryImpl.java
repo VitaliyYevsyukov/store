@@ -25,25 +25,24 @@ public class StoreRepositoryImpl implements StoreRepository {
 
     @Override
     public Optional<Store> getById(Long id) {
-        try{
+        try {
             Store store = jdbcTemplate.queryForObject("select * from stores where id = ?",
                     storeRowMapper, id);
             return Optional.ofNullable(store);
-        }catch (DataAccessException e){
+        } catch (DataAccessException e) {
             e.printStackTrace();
             return Optional.empty();
         }
     }
 
     @Override
-    public Optional<Store> create(Store store){
-
-        try{
+    public Optional<Store> create(Store store) {
+        try {
             jdbcTemplate.update("insert into stores(name, phone, type, cashbox_count, delivery)" +
                             " values(?,?,?,?,?)", store.getName(), store.getPhone(), store.getType(),
                     store.getCashboxCount(), store.isDelivery());
             return Optional.ofNullable(store);
-        }catch (DataAccessException e){
+        } catch (DataAccessException e) {
             e.printStackTrace();
             return Optional.empty();
         }
@@ -55,15 +54,18 @@ public class StoreRepositoryImpl implements StoreRepository {
     }
 
     @Override
-    public Optional<Store> update(Store store) {
-        try{
-            jdbcTemplate.update("update stores set cashbox_count = ? where id = ?",
-                    store.getCashboxCount(), store.getId());
-            return Optional.ofNullable(store);
-        }catch (DataAccessException e){
-            e.printStackTrace();
-            return Optional.empty();
-        }
+    public Optional<Store> update(Store store, Long id) {
+        jdbcTemplate.update("update stores set " +
+                        "name = ?, " +
+                        "phone = ? ," +
+                        "type = ?, " +
+                        "cashbox_count = ?, " +
+                        "delivery = ? " +
+                        "where id = ?",
+                store.getName(), store.getPhone(),
+                store.getType(), store.getCashboxCount(),
+                store.isDelivery(), id);
+        return getById(id);
     }
 
     @Override

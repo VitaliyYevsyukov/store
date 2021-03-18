@@ -7,6 +7,7 @@ import java.time.Instant;
 
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor(access = AccessLevel.PACKAGE)
 @AllArgsConstructor
 public class GoodsDto {

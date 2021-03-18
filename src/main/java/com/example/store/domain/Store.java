@@ -27,4 +27,5 @@ public class Store {
         this.cashboxCount = cashboxCount;
         this.isDelivery = isDelivery;
     }
+
 }

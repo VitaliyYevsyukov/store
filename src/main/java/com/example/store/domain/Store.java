@@ -8,8 +8,9 @@ import java.util.List;
 @Getter
 @Setter
 @EqualsAndHashCode
-@NoArgsConstructor(access = AccessLevel.PACKAGE)
+@NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Store {
 
     private Long id;

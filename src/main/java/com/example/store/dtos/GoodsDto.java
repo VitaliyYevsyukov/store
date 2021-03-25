@@ -8,8 +8,9 @@ import java.time.Instant;
 @Getter
 @Setter
 @ToString
-@NoArgsConstructor(access = AccessLevel.PACKAGE)
+@NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode
 public class GoodsDto {
 
     private Long id;

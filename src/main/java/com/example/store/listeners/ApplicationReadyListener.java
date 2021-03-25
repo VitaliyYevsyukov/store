@@ -25,16 +25,17 @@ public class ApplicationReadyListener {
     private static final Logger LOGGER = LoggerFactory.getLogger(ApplicationReadyListener.class);
     //private final StoreRepository storeRepository;
     //private final GoodsRepository goodsRepository;
-    //private final StoreService storeService;
+    private final StoreService storeService;
     private final GoodsService goodsService;
 
-    public ApplicationReadyListener(GoodsService goodsService) {
+    /*public ApplicationReadyListener(GoodsService goodsService) {
+        this.goodsService = goodsService;
+    }*/
+
+    public ApplicationReadyListener(StoreService storeService, GoodsService goodsService){
+        this.storeService = storeService;
         this.goodsService = goodsService;
     }
-
-    /*public ApplicationReadyListener(StoreService storeService){
-        this.storeService = storeService;
-    }*/
     /*public ApplicationReadyListener(StoreRepository storeRepository, GoodsRepository goodsRepository) {
         this.storeRepository = storeRepository;
         this.goodsRepository = goodsRepository;
@@ -46,12 +47,12 @@ public class ApplicationReadyListener {
         // SERVICE
         /*Goods goods1 = new Goods("bread", 15.5, "Kulinichi", null);
         GoodsDto goodsDto = new GoodsDto(goods1);
-        goodsService.create(goodsDto, 24L);*/
+        goodsService.create(goodsDto, 27L);*/
         //storeService.create(new StoreDto(new Store("Posad", "+380984567534", "grocery", 34, false)));
         //StoreDto storeDto = storeService.getById(24L);
         //storeDto.setCashboxCount(26);
         //storeService.update(storeDto, 24L);
-        //storeService.delete(17l);
+        //storeService.delete(27l);
         //LOGGER.info("Store = {}", storeDto);
 
 

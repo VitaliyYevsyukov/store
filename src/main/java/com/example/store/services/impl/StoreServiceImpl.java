@@ -9,6 +9,7 @@ import com.example.store.exceptions.ResourceNotFoundException;
 import com.example.store.repositories.GoodsRepository;
 import com.example.store.repositories.StoreRepository;
 import com.example.store.services.StoreService;
+import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
@@ -33,7 +34,16 @@ public class StoreServiceImpl implements StoreService {
 
     @Override
     public StoreDto create(StoreDto storeDto) {
-        Store store = storeRepository.create(StoreDto.convertToDomain(storeDto))
+        Store store = StoreDto.convertToDomain(storeDto);
+        Store createdStore = storeRepository.create(store)
+                .orElseThrow(() -> new ApplicationException("Failed to create store"));
+        List<Goods> createdGoodsList = goodsRepository.create(storeDto.getGoodsDtoList()
+                .stream().map(GoodsDto::convertToDomain)
+                .collect(Collectors.toList()), createdStore.getId());
+        return new StoreDto(createdStore, createdGoodsList);
+
+        // EQUALS
+        /*Store store = storeRepository.create(StoreDto.convertToDomain(storeDto))
                 .orElseThrow(() -> new ResourceNotFoundException("Failed to create store " + storeDto));
         List<Goods> goodsList = storeDto.getGoodsDtoList()
                 .stream()
@@ -51,10 +61,11 @@ public class StoreServiceImpl implements StoreService {
                 .map(goods -> GoodsDto.convertToDto(goods))
                 .collect(Collectors.toList()));
 
-        return convertStoreDto;
+        return convertStoreDto;*/
     }
 
     @Override
+    @SneakyThrows
     public StoreDto getById(Long id) {
         return storeRepository.getById(id)
                 .map(store -> new StoreDto(store, goodsRepository.getAllByStoreId(id)))
@@ -74,8 +85,11 @@ public class StoreServiceImpl implements StoreService {
 
     @Override
     public void delete(Long id) {
-        goodsRepository.deleteAllByStoreId(id);
-        storeRepository.delete(id);
+        storeRepository.getById(id).map(store -> {
+            goodsRepository.deleteAllByStoreId(id);
+            storeRepository.delete(id);
+            return store;
+        }).orElseThrow(() -> new ResourceNotFoundException("Store with id " + id + " is not found"));
     }
 
     @Override

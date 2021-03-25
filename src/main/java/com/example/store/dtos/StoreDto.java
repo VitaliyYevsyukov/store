@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 @ToString
 @NoArgsConstructor(access = AccessLevel.PACKAGE)
 @AllArgsConstructor
+@EqualsAndHashCode
 public class StoreDto {
 
     private Long id;

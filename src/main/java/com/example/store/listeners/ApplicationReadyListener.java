@@ -5,37 +5,54 @@ import com.example.store.domain.Store;
 import com.example.store.dtos.GoodsDto;
 import com.example.store.dtos.StoreDto;
 import com.example.store.repositories.GoodsRepository;
+import com.example.store.repositories.JpaGoodsRepository;
+import com.example.store.repositories.JpaStoreRepository;
 import com.example.store.repositories.StoreRepository;
 import com.example.store.services.GoodsService;
 import com.example.store.services.StoreService;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
+import javax.transaction.Transactional;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
 @Component
+@AllArgsConstructor
+@Slf4j
+@Transactional
 public class ApplicationReadyListener {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ApplicationReadyListener.class);
-    //private final StoreRepository storeRepository;
-    //private final GoodsRepository goodsRepository;
     private final StoreService storeService;
     private final GoodsService goodsService;
+
+    /*private final StoreService storeService;
+    private final JpaStoreRepository jpaStoreRepository;
+    private final JpaGoodsRepository jpaGoodsRepository;*/
+
+    /*private static final Logger LOGGER =
+            LoggerFactory.getLogger(ApplicationReadyListener.class);*/
+
+    //private final StoreRepository storeRepository;
+    //private final GoodsRepository goodsRepository;
+    //private final StoreService storeService;
+    //private final GoodsService goodsService;
 
     /*public ApplicationReadyListener(GoodsService goodsService) {
         this.goodsService = goodsService;
     }*/
 
-    public ApplicationReadyListener(StoreService storeService, GoodsService goodsService){
+    /*public ApplicationReadyListener(StoreService storeService, GoodsService goodsService){
         this.storeService = storeService;
         this.goodsService = goodsService;
-    }
+    }*/
     /*public ApplicationReadyListener(StoreRepository storeRepository, GoodsRepository goodsRepository) {
         this.storeRepository = storeRepository;
         this.goodsRepository = goodsRepository;
@@ -44,7 +61,46 @@ public class ApplicationReadyListener {
     @EventListener(ApplicationReadyEvent.class)
     public void applicationReadyHandler(){
 
+        //Store store = jpaStoreRepository.findById(1L).get();
+        //log.info("Store: {}" , store);
+
+        /*Goods goods = jpaGoodsRepository.getOne(3L);
+        log.info("Goods: {}", goods);
+
+        Store store = Store.builder()
+                .id(40L)
+                .name("new name")
+                .build();
+
+        jpaStoreRepository.save(store);*/
+
         // SERVICE
+        //storeService.delete(30L);
+
+        /*Store store = Store.builder()
+                .id(32L)
+                .name("new new Store")
+                .cashboxCount(34)
+                .build();
+
+        StoreDto storeDto = new StoreDto(store);
+        storeService.create(storeDto);*/
+
+        StoreDto existedStore = storeService.getById(32L);
+        Store store = StoreDto.convertToDomain(existedStore);
+
+        log.info("Store {}", store);
+
+        Goods goods = Goods.builder()
+                .store(store)
+                .name("new goods")
+                .cost(1234.0)
+                .build();
+        GoodsDto goodsDto = new GoodsDto(goods);
+        goodsService.create(goodsDto, store.getId());
+
+        //goodsService.create(goodsDto, store.getId());
+
         /*Goods goods1 = new Goods("bread", 15.5, "Kulinichi", null);
         GoodsDto goodsDto = new GoodsDto(goods1);
         goodsService.create(goodsDto, 27L);*/

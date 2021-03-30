@@ -10,7 +10,7 @@ import java.time.Instant;
 @Setter
 @EqualsAndHashCode
 @NoArgsConstructor
-@AllArgsConstructor
+//@AllArgsConstructor
 @Builder
 @Table(name = "goods")
 @Entity
@@ -34,11 +34,12 @@ public class Goods {
         this.dateOfManufacture = dateOfManufacture;
     }
 
-    public Goods(Long id, String name, Double cost, String manufacturer, Instant dateOfManufacture) {
+    public Goods(Long id, String name, Double cost, String manufacturer, Instant dateOfManufacture, Store store) {
         this.id = id;
         this.name = name;
         this.cost = cost;
         this.manufacturer = manufacturer;
         this.dateOfManufacture = dateOfManufacture;
+        this.store = store;
     }
 }

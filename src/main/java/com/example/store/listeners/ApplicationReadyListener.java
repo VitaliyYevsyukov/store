@@ -31,8 +31,11 @@ import java.util.Set;
 public class ApplicationReadyListener {
 
     private final StoreService storeService;
+    private final GoodsService goodsService;
+
+    /*private final StoreService storeService;
     private final JpaStoreRepository jpaStoreRepository;
-    private final JpaGoodsRepository jpaGoodsRepository;
+    private final JpaGoodsRepository jpaGoodsRepository;*/
 
     /*private static final Logger LOGGER =
             LoggerFactory.getLogger(ApplicationReadyListener.class);*/
@@ -61,7 +64,7 @@ public class ApplicationReadyListener {
         //Store store = jpaStoreRepository.findById(1L).get();
         //log.info("Store: {}" , store);
 
-        Goods goods = jpaGoodsRepository.getOne(3L);
+        /*Goods goods = jpaGoodsRepository.getOne(3L);
         log.info("Goods: {}", goods);
 
         Store store = Store.builder()
@@ -69,9 +72,35 @@ public class ApplicationReadyListener {
                 .name("new name")
                 .build();
 
-        jpaStoreRepository.save(store);
+        jpaStoreRepository.save(store);*/
 
         // SERVICE
+        //storeService.delete(30L);
+
+        /*Store store = Store.builder()
+                .id(32L)
+                .name("new new Store")
+                .cashboxCount(34)
+                .build();
+
+        StoreDto storeDto = new StoreDto(store);
+        storeService.create(storeDto);*/
+
+        StoreDto existedStore = storeService.getById(32L);
+        Store store = StoreDto.convertToDomain(existedStore);
+
+        log.info("Store {}", store);
+
+        Goods goods = Goods.builder()
+                .store(store)
+                .name("new goods")
+                .cost(1234.0)
+                .build();
+        GoodsDto goodsDto = new GoodsDto(goods);
+        goodsService.create(goodsDto, store.getId());
+
+        //goodsService.create(goodsDto, store.getId());
+
         /*Goods goods1 = new Goods("bread", 15.5, "Kulinichi", null);
         GoodsDto goodsDto = new GoodsDto(goods1);
         goodsService.create(goodsDto, 27L);*/

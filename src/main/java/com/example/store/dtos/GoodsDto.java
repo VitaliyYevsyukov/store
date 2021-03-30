@@ -1,6 +1,7 @@
 package com.example.store.dtos;
 
 import com.example.store.domain.Goods;
+import com.example.store.domain.Store;
 import lombok.*;
 
 import java.time.Instant;
@@ -18,6 +19,7 @@ public class GoodsDto {
     private Double cost;
     private String manufacturer;
     private Instant dateOfManufacture;
+    private Store store;
 
     public GoodsDto(Goods goods){
         this.id = goods.getId();
@@ -25,11 +27,12 @@ public class GoodsDto {
         this.cost = goods.getCost();
         this.manufacturer = goods.getManufacturer();
         this.dateOfManufacture = goods.getDateOfManufacture();
+        this.store = goods.getStore();
     }
 
     public static Goods convertToDomain(GoodsDto goodsDto){
         return new Goods(goodsDto.getId(), goodsDto.getName(), goodsDto.getCost(),
-                goodsDto.getManufacturer(), goodsDto.getDateOfManufacture());
+                goodsDto.getManufacturer(), goodsDto.getDateOfManufacture(), goodsDto.getStore());
     }
 
     public static GoodsDto convertToDto(Goods goods) {
